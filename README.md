@@ -118,24 +118,4 @@ We welcome contributions! Here's how you can contribute:
 
 ---
 
-## 📝 License  
-
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.  
-
----
-
-## 🙌 Acknowledgements  
-
-Thanks to everyone contributing to and using **Khuje Pai**. Together, let’s make finding lost items more efficient and community-driven!  
-
----
-
-## 📧 Contact  
-
-For any queries or collaboration opportunities, feel free to reach out:  
-
-**Hasib Altaf**  
-📧 Email: [hasibaltaf2839@gmail.com](mailto:hasibaltaf2839@gmail.com)  
-```  
-
 This version is more professional, with added diagrams and clear sections, making it easier for users and contributors to understand and navigate the project. Let me know if you’d like to tweak or add more details!
