@@ -1,0 +1,161 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function signedIn() {
+      return request.auth != null;
+    }
+
+    function myUid() {
+      return request.auth.uid;
+    }
+
+    function myUserPath() {
+      return /databases/$(database)/documents/User/$(myUid());
+    }
+
+    function hasMyUserDoc() {
+      return signedIn() && exists(myUserPath());
+    }
+
+    function myCollegeCode() {
+      return get(myUserPath()).data.collegeCode;
+    }
+
+    function userCollege(userId) {
+      return get(/databases/$(database)/documents/User/$(userId)).data.collegeCode;
+    }
+
+    function chatPath(chatId) {
+      return /databases/$(database)/documents/Chats/$(chatId);
+    }
+
+    function isSameCollegeData(data) {
+      return hasMyUserDoc() && data.collegeCode == myCollegeCode();
+    }
+
+    match /User/{userId} {
+      allow read: if hasMyUserDoc() &&
+                  resource.data.collegeCode == myCollegeCode();
+
+      allow create: if signedIn() &&
+                    userId == myUid() &&
+                    request.resource.data.id == myUid() &&
+                    request.resource.data.collegeCode is string;
+
+      allow update: if signedIn() &&
+                    userId == myUid() &&
+                    resource.data.id == myUid() &&
+                    request.resource.data.id == myUid() &&
+                    request.resource.data.collegeCode == resource.data.collegeCode;
+
+      allow delete: if false;
+    }
+
+    match /Post/{postId} {
+      allow read: if isSameCollegeData(resource.data);
+
+      allow create: if hasMyUserDoc() &&
+                    request.resource.data.user_id == myUid() &&
+                    request.resource.data.collegeCode == myCollegeCode();
+
+      allow update: if hasMyUserDoc() &&
+                    resource.data.collegeCode == myCollegeCode() &&
+                    request.resource.data.collegeCode == resource.data.collegeCode &&
+                    request.resource.data.user_id == resource.data.user_id &&
+                    (
+                      resource.data.user_id == myUid() ||
+                      (
+                        request.resource.data.diff(resource.data).changedKeys().hasOnly([
+                          "like_cnt",
+                          "comment_cnt",
+                          "share_cnt"
+                        ])
+                      )
+                    );
+
+      allow delete: if hasMyUserDoc() &&
+                    resource.data.user_id == myUid() &&
+                    resource.data.collegeCode == myCollegeCode();
+    }
+
+    match /Comment/{commentId} {
+      allow read: if hasMyUserDoc() &&
+                  exists(/databases/$(database)/documents/Post/$(resource.data.post_id)) &&
+                  get(/databases/$(database)/documents/Post/$(resource.data.post_id)).data.collegeCode == myCollegeCode();
+
+      allow create: if hasMyUserDoc() &&
+                    request.resource.data.user_id == myUid() &&
+                    exists(/databases/$(database)/documents/Post/$(request.resource.data.post_id)) &&
+                    get(/databases/$(database)/documents/Post/$(request.resource.data.post_id)).data.collegeCode == myCollegeCode();
+
+      allow update, delete: if false;
+    }
+
+    match /Requests/{requestId} {
+      allow read: if isSameCollegeData(resource.data);
+
+      allow create: if hasMyUserDoc() &&
+                    request.resource.data.user_id == myUid() &&
+                    request.resource.data.collegeCode == myCollegeCode();
+
+      allow update: if hasMyUserDoc() &&
+                    resource.data.user_id == myUid() &&
+                    request.resource.data.user_id == myUid() &&
+                    request.resource.data.collegeCode == resource.data.collegeCode;
+
+      allow delete: if hasMyUserDoc() &&
+                    resource.data.user_id == myUid();
+    }
+
+    match /Notifications/{id} {
+      allow read: if hasMyUserDoc() &&
+                  resource.data.collegeCode == myCollegeCode() &&
+                  (
+                    !("targetUserId" in resource.data) ||
+                    resource.data.targetUserId == "" ||
+                    resource.data.targetUserId == myUid()
+                  );
+
+      allow create: if hasMyUserDoc() &&
+                    request.resource.data.collegeCode == myCollegeCode();
+
+      allow update, delete: if false;
+    }
+
+    match /Chats/{chatId} {
+      allow read: if hasMyUserDoc() &&
+                  resource.data.user_ids is list &&
+                  resource.data.user_ids.hasAny([myUid()]);
+
+      allow create: if hasMyUserDoc() &&
+                    request.resource.data.user_ids is list &&
+                    request.resource.data.user_ids.size() == 2 &&
+                    request.resource.data.user_ids.hasAny([myUid()]) &&
+                    exists(/databases/$(database)/documents/User/$(request.resource.data.user_ids[0])) &&
+                    exists(/databases/$(database)/documents/User/$(request.resource.data.user_ids[1])) &&
+                    userCollege(request.resource.data.user_ids[0]) == myCollegeCode() &&
+                    userCollege(request.resource.data.user_ids[1]) == myCollegeCode();
+
+      allow update: if hasMyUserDoc() &&
+                    resource.data.user_ids is list &&
+                    resource.data.user_ids.hasAny([myUid()]) &&
+                    request.resource.data.user_ids == resource.data.user_ids;
+
+      allow delete: if false;
+
+      match /messages/{messageId} {
+        allow read: if hasMyUserDoc() &&
+                    exists(chatPath(chatId)) &&
+                    get(chatPath(chatId)).data.user_ids.hasAny([myUid()]);
+
+        allow create: if hasMyUserDoc() &&
+                      exists(chatPath(chatId)) &&
+                      get(chatPath(chatId)).data.user_ids.hasAny([myUid()]) &&
+                      request.resource.data.sender_id == myUid();
+
+        allow update, delete: if false;
+      }
+    }
+  }
+}

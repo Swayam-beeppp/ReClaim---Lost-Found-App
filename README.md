@@ -1,6 +1,6 @@
-# 🕵️‍♂️ ReClaim - Lost & Found Mobile Application  
+# 🕵️‍♂️ Khuje Pai - Lost & Found Mobile Application  
 
-**ReClaim** is a community-driven mobile application designed to simplify the process of reporting and finding lost or found items. Built with **Flutter** and **Firebase**, this app empowers users to connect, collaborate, and contribute to their community by sharing and recovering lost belongings.
+**Khuje Pai** (meaning "Found" in Bangla) is a community-driven mobile application designed to simplify the process of reporting and finding lost or found items. Built with **Flutter** and **Firebase**, this app empowers users to connect, collaborate, and contribute to their community by sharing and recovering lost belongings.
 
 ## 🚀 Features  
 
@@ -96,4 +96,46 @@ khuje_pai/
 └── pubspec.yaml           # Project dependencies and metadata  
 ```  
 
+---
 
+## 👥 Contribution Guidelines  
+
+We welcome contributions! Here's how you can contribute:  
+1. Fork the repository.  
+2. Create a new branch for your feature/bugfix:  
+   ```bash
+   git checkout -b feature-name
+   ```  
+3. Commit your changes:  
+   ```bash
+   git commit -m "Add detailed feature"
+   ```  
+4. Push the branch:  
+   ```bash
+   git push origin feature-name
+   ```  
+5. Open a Pull Request.  
+
+---
+
+## 📝 License  
+
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.  
+
+---
+
+## 🙌 Acknowledgements  
+
+Thanks to everyone contributing to and using **Khuje Pai**. Together, let’s make finding lost items more efficient and community-driven!  
+
+---
+
+## 📧 Contact  
+
+For any queries or collaboration opportunities, feel free to reach out:  
+
+**Hasib Altaf**  
+📧 Email: [hasibaltaf2839@gmail.com](mailto:hasibaltaf2839@gmail.com)  
+```  
+
+This version is more professional, with added diagrams and clear sections, making it easier for users and contributors to understand and navigate the project. Let me know if you’d like to tweak or add more details!

@@ -1,0 +1,27 @@
+{
+  "firestore": {
+    "rules": "firestore.rules"
+  },
+  "functions": {
+    "source": "functions"
+  },
+  "flutter": {
+    "platforms": {
+      "android": {
+        "default": {
+          "projectId": "re-claim",
+          "appId": "1:707885595034:android:33e8c72714937fd2152223",
+          "fileOutput": "android/app/google-services.json"
+        }
+      },
+      "dart": {
+        "lib/firebase_options.dart": {
+          "projectId": "re-claim",
+          "configurations": {
+            "android": "1:707885595034:android:33e8c72714937fd2152223"
+          }
+        }
+      }
+    }
+  }
+}

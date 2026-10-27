@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "707885595034",
+    "project_id": "re-claim",
+    "storage_bucket": "re-claim.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:707885595034:android:33e8c72714937fd2152223",
+        "android_client_info": {
+          "package_name": "com.hasib39.khuje_pai"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "707885595034-20l9tgp5v216e20g2609hc69qcf803p0.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.hasib39.khuje_pai",
+            "certificate_hash": "07b53a87959073684bb3a58727448602c6493707"
+          }
+        },
+        {
+          "client_id": "707885595034-28lv3s0kol6bpo5ofqk3ge4m43n7ipdu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBz4ZMvt95jC7uY9nTZtQVRvJB-b8NZtns"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "707885595034-28lv3s0kol6bpo5ofqk3ge4m43n7ipdu.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
